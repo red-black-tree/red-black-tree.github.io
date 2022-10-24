@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic%7CConsolas:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.13.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="分享一种时间复杂度 O(Nlog⁡N)O\left(N\log N\right)O(NlogN)（不是其他题解的 O(Nlog⁡ans)O\left(N\log ans\right)O(Nlogans)）的做法，理论上可以跑过 N&#x3D;5×106N&#x3D;5\times 10^6N&#x3D;5×106 甚至更大的数据。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="洛谷 P1663 山 题解">
+<meta property="og:url" content="http://example.com/1582/10/06/%E6%B4%9B%E8%B0%B7-P1663-%E5%B1%B1-%E9%A2%98%E8%A7%A3/index.html">
+<meta property="og:site_name" content="rb_tree.h">
+<meta property="og:description" content="分享一种时间复杂度 O(Nlog⁡N)O\left(N\log N\right)O(NlogN)（不是其他题解的 O(Nlog⁡ans)O\left(N\log ans\right)O(Nlogans)）的做法，理论上可以跑过 N&#x3D;5×106N&#x3D;5\times 10^6N&#x3D;5×106 甚至更大的数据。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.luogu.com.cn/upload/image_hosting/v7yrcevs.png">
+<meta property="article:published_time" content="1582-10-05T15:54:17.000Z">
+<meta property="article:author" content="rb_tree">
+<meta property="article:tag" content="计算几何">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.luogu.com.cn/upload/image_hosting/v7yrcevs.png">
+
+
+<link rel="canonical" href="http://example.com/1582/10/06/%E6%B4%9B%E8%B0%B7-P1663-%E5%B1%B1-%E9%A2%98%E8%A7%A3/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/1582/10/06/%E6%B4%9B%E8%B0%B7-P1663-%E5%B1%B1-%E9%A2%98%E8%A7%A3/","path":"1582/10/06/洛谷-P1663-山-题解/","title":"洛谷 P1663 山 题解"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>洛谷 P1663 山 题解 | rb_tree.h</title>
+  
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">rb_tree.h</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">red-black tree</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="rb_tree"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">rb_tree</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/JYCNB-GitHub" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;JYCNB-GitHub" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jyc15057053670@163.com" title="E-Mail → mailto:jyc15057053670@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      friends
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://ftt2333.gitlab.io/" title="https:&#x2F;&#x2F;ftt2333.gitlab.io" rel="noopener" target="_blank">ftt2333</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.iakioi.cf/" title="https:&#x2F;&#x2F;www.iakioi.cf" rel="noopener" target="_blank">cmk666</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/1582/10/06/%E6%B4%9B%E8%B0%B7-P1663-%E5%B1%B1-%E9%A2%98%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rb_tree">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rb_tree.h">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="洛谷 P1663 山 题解 | rb_tree.h">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          洛谷 P1663 山 题解
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：1582-10-06 00:00:00" itemprop="dateCreated datePublished" datetime="1582-10-06T00:00:00+08:05">1582-10-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E9%A2%98%E8%A7%A3/" itemprop="url" rel="index"><span itemprop="name">题解</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>分享一种时间复杂度 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mrow><mo fence="true">(</mo><mi>N</mi><mi>log</mi><mo>⁡</mo><mi>N</mi><mo fence="true">)</mo></mrow></mrow><annotation encoding="application/x-tex">O\left(N\log N\right)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;">(</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mclose delimcenter" style="top:0em;">)</span></span></span></span></span>（不是其他题解的 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mrow><mo fence="true">(</mo><mi>N</mi><mi>log</mi><mo>⁡</mo><mi>a</mi><mi>n</mi><mi>s</mi><mo fence="true">)</mo></mrow></mrow><annotation encoding="application/x-tex">O\left(N\log ans\right)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;">(</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal">a</span><span class="mord mathnormal">n</span><span class="mord mathnormal">s</span><span class="mclose delimcenter" style="top:0em;">)</span></span></span></span></span>）的做法，理论上可以跑过 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mo>=</mo><mn>5</mn><mo>×</mo><mn>1</mn><msup><mn>0</mn><mn>6</mn></msup></mrow><annotation encoding="application/x-tex">N=5\times 10^6</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">5</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">6</span></span></span></span></span></span></span></span></span></span></span> 甚至更大的数据。</p>
+<span id="more"></span>
+<p>首先我们观察这张图。</p>
+<p><img src="https://cdn.luogu.com.cn/upload/image_hosting/v7yrcevs.png" alt></p>
+<p>发现对于蓝色线段，只有红色直线上侧的点能看到这条线段。</p>
+<p>而我们想要所有的线段都被看到，于是对所有线段所对应的直线上侧求 <a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P4196">半平面交</a>，答案就是所得图形的最低点。</p>
+<p>在本题中求半平面交时维护的一定是一个下凸壳，那么答案必然是下凸壳其中一个顶点的 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span></span></span></span> 坐标。</p>
+<p>时间复杂度分析：半平面交核心代码 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mrow><mo fence="true">(</mo><mi>N</mi><mo fence="true">)</mo></mrow></mrow><annotation encoding="application/x-tex">O\left(N\right)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;">(</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mclose delimcenter" style="top:0em;">)</span></span></span></span></span>，排序 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mrow><mo fence="true">(</mo><mi>N</mi><mi>log</mi><mo>⁡</mo><mi>N</mi><mo fence="true">)</mo></mrow></mrow><annotation encoding="application/x-tex">O\left(N\log N\right)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;">(</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mclose delimcenter" style="top:0em;">)</span></span></span></span></span>，总复杂度 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mrow><mo fence="true">(</mo><mi>N</mi><mi>log</mi><mo>⁡</mo><mi>N</mi><mo fence="true">)</mo></mrow></mrow><annotation encoding="application/x-tex">O\left(N\log N\right)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;">(</span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mclose delimcenter" style="top:0em;">)</span></span></span></span></span>。</p>
+<p>注意一个小细节，题目中说灯必须要装在山上，于是加两个半平面 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo>≥</mo><msub><mi>X</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">x\ge X_1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7719400000000001em;vertical-align:-0.13597em;"></span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.07847em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 和 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo>≤</mo><msub><mi>X</mi><mi>N</mi></msub></mrow><annotation encoding="application/x-tex">x\le X_N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7719400000000001em;vertical-align:-0.13597em;"></span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.07847em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.10903em;">N</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 作为限制。</p>
+<p>代码如下。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="type">const</span> <span class="type">double</span> eps=<span class="number">1e-9</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">vec</span>&#123;</span><br><span class="line">    <span class="type">double</span> x,y;</span><br><span class="line">    <span class="built_in">vec</span>(<span class="type">const</span> <span class="type">double</span>&amp;x_=<span class="number">0</span>,<span class="type">const</span> <span class="type">double</span>&amp;y_=<span class="number">0</span>)&#123;x=x_,y=y_;&#125;</span><br><span class="line">    vec <span class="keyword">operator</span>+(<span class="type">const</span> vec&amp;b)<span class="type">const</span>&#123;<span class="keyword">return</span> <span class="built_in">vec</span>(x+b.x,y+b.y);&#125;</span><br><span class="line">    vec <span class="keyword">operator</span>-(<span class="type">const</span> vec&amp;b)<span class="type">const</span>&#123;<span class="keyword">return</span> <span class="built_in">vec</span>(x-b.x,y-b.y);&#125;</span><br><span class="line">    <span class="type">double</span> <span class="keyword">operator</span>*(<span class="type">const</span> vec&amp;b)<span class="type">const</span>&#123;<span class="keyword">return</span>  x*b.x+y*b.y ;&#125;</span><br><span class="line">    <span class="function"><span class="type">double</span> <span class="title">times</span>    <span class="params">(<span class="type">const</span> vec&amp;b)</span><span class="type">const</span></span>&#123;<span class="keyword">return</span>  x*b.y-y*b.x ;&#125;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">print</span><span class="params">()</span><span class="type">const</span></span>&#123;cout&lt;&lt;<span class="string">&#x27;(&#x27;</span>&lt;&lt;x&lt;&lt;<span class="string">&#x27;,&#x27;</span>&lt;&lt;y&lt;&lt;<span class="string">&#x27;)&#x27;</span>&lt;&lt;endl;&#125;</span><br><span class="line">    <span class="function"><span class="type">double</span> <span class="title">deg</span><span class="params">()</span><span class="type">const</span></span>&#123;<span class="keyword">return</span>::<span class="built_in">atan2</span>(x,y);&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">segment</span>&#123;</span><br><span class="line">    vec OA,OB;</span><br><span class="line">    <span class="function">vec <span class="title">AB</span><span class="params">()</span><span class="type">const</span></span>&#123;<span class="keyword">return</span> OB-OA;&#125;</span><br><span class="line">    <span class="built_in">segment</span>(vec OA_=<span class="built_in">vec</span>(),vec OB_=<span class="built_in">vec</span>())&#123;OA=OA_,OB=OB_;&#125;</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">is_cw</span><span class="params">(<span class="type">const</span> vec&amp;b)</span><span class="type">const</span></span>&#123;<span class="keyword">return</span> <span class="built_in">AB</span>().<span class="built_in">times</span>(b-OA)&lt;-eps;&#125;</span><br><span class="line">    <span class="function">vec <span class="title">inter</span><span class="params">(<span class="type">const</span> segment&amp;b)</span><span class="type">const</span></span>&#123;</span><br><span class="line">        <span class="type">double</span> a_1,b_1,c_1;</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">fabs</span>(  <span class="built_in">AB</span>().x)&lt;eps) a_1=<span class="number">1</span>,b_1=<span class="number">0</span>,c_1=  OA.x;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            a_1=  OA.y       /(  OA.x-  OB.x)+</span><br><span class="line">                  OB.y       /(  OB.x-  OA.x);</span><br><span class="line">            c_1=  OA.y*  OB.x/(  OA.x-  OB.x)+</span><br><span class="line">                  OB.y*  OA.x/(  OB.x-  OA.x);</span><br><span class="line">            b_1=<span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">double</span> a_2,b_2,c_2;</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">fabs</span>(b.<span class="built_in">AB</span>().x)&lt;eps) a_2=<span class="number">1</span>,b_2=<span class="number">0</span>,c_2=b.OA.x;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            a_2=b.OA.y       /(b.OA.x-b.OB.x)+</span><br><span class="line">                b.OB.y       /(b.OB.x-b.OA.x);</span><br><span class="line">            c_2=b.OA.y*b.OB.x/(b.OA.x-b.OB.x)+</span><br><span class="line">                b.OB.y*b.OA.x/(b.OB.x-b.OA.x);</span><br><span class="line">            b_2=<span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">double</span> d=<span class="built_in">vec</span>(a_1,b_1).<span class="built_in">times</span>(<span class="built_in">vec</span>(a_2,b_2));</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">vec</span>(</span><br><span class="line">            <span class="built_in">vec</span>(c_1,b_1).<span class="built_in">times</span>(<span class="built_in">vec</span>(c_2,b_2))/d,</span><br><span class="line">            <span class="built_in">vec</span>(a_1,c_1).<span class="built_in">times</span>(<span class="built_in">vec</span>(a_2,c_2))/d</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">bool</span> <span class="keyword">operator</span>&lt;(<span class="type">const</span> segment&amp;b)<span class="type">const</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">AB</span>().<span class="built_in">deg</span>()&lt;b.<span class="built_in">AB</span>().<span class="built_in">deg</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">constexpr</span> <span class="type">int</span> maxn=<span class="number">5005</span>;</span><br><span class="line"><span class="type">int</span> N,M,K;vec A[maxn];<span class="type">double</span> Ans=INFINITY;</span><br><span class="line">segment P[maxn],Seg[maxn];deque&lt;segment&gt;Q;</span><br><span class="line"><span class="function">vec  <span class="title">back_point</span><span class="params">()</span></span>&#123;<span class="keyword">return</span>(----Q.<span class="built_in">end</span>())-&gt;<span class="built_in">inter</span>(*--Q.<span class="built_in">end</span>());&#125;</span><br><span class="line"><span class="function">vec <span class="title">front_point</span><span class="params">()</span></span>&#123;<span class="keyword">return</span>(++Q.<span class="built_in">begin</span>())-&gt;<span class="built_in">inter</span>(*Q.<span class="built_in">begin</span>());&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> f=<span class="number">1</span>,ret=<span class="number">0</span>;<span class="type">char</span> ch=<span class="built_in">getchar</span>();</span><br><span class="line">    <span class="keyword">while</span>(!<span class="built_in">isdigit</span>(ch))&#123;<span class="keyword">if</span>(ch==<span class="string">&#x27;-&#x27;</span>)f=-f; ch=<span class="built_in">getchar</span>();&#125;</span><br><span class="line">    <span class="keyword">while</span>( <span class="built_in">isdigit</span>(ch)) ret=(ret&lt;&lt;<span class="number">3</span>)+(ret&lt;&lt;<span class="number">1</span>)+(ch&amp;<span class="number">15</span>),ch=<span class="built_in">getchar</span>();</span><br><span class="line">    <span class="keyword">return</span> f*ret;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    N=<span class="built_in">read</span>()+<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">2</span>;i&lt; N;i++) <span class="built_in">scanf</span>(<span class="string">&quot;%lf%lf&quot;</span>,&amp;A[i].x,&amp;A[i].y);</span><br><span class="line">    A[<span class="number">1</span>].x=A[<span class="number">2</span>].x,A[<span class="number">1</span>].y=A[<span class="number">2</span>].y+<span class="number">1</span>,A[N].x=A[N<span class="number">-1</span>].x,A[N].y=A[N<span class="number">-1</span>].y+<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt; N;i++) P[++K]=<span class="built_in">segment</span>(A[i],A[i+<span class="number">1</span>]);</span><br><span class="line">    <span class="built_in">sort</span>(P+<span class="number">1</span>,P+K+<span class="number">1</span>);</span><br><span class="line">    <span class="built_in">reverse</span>(P+<span class="number">1</span>,P+K+<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=K;i++)&#123;</span><br><span class="line">        <span class="keyword">while</span>(Q.<span class="built_in">size</span>()&gt;<span class="number">1</span>&amp;&amp;P[i].<span class="built_in">is_cw</span>( <span class="built_in">back_point</span>())) Q.<span class="built_in">pop_back</span> ();</span><br><span class="line">        <span class="keyword">while</span>(Q.<span class="built_in">size</span>()&gt;<span class="number">1</span>&amp;&amp;P[i].<span class="built_in">is_cw</span>(<span class="built_in">front_point</span>())) Q.<span class="built_in">pop_front</span>();</span><br><span class="line">        <span class="keyword">while</span>(Q.<span class="built_in">size</span>()&amp;&amp;<span class="built_in">fabs</span>(P[i].<span class="built_in">AB</span>().<span class="built_in">deg</span>()-Q.<span class="built_in">back</span>().<span class="built_in">AB</span>().<span class="built_in">deg</span>())&lt;eps</span><br><span class="line">              &amp;&amp;P[i].<span class="built_in">is_cw</span>(Q.<span class="built_in">back</span>().OA)) Q.<span class="built_in">pop_back</span>();</span><br><span class="line">        <span class="keyword">if</span>(Q.<span class="built_in">empty</span>()||<span class="built_in">fabs</span>(Q.<span class="built_in">back</span>().<span class="built_in">AB</span>().<span class="built_in">deg</span>()-P[i].<span class="built_in">AB</span>().<span class="built_in">deg</span>())&gt;eps)</span><br><span class="line">            Q.<span class="built_in">push_back</span>(P[i]);</span><br><span class="line">        <span class="keyword">if</span>(Q.<span class="built_in">size</span>()&gt;<span class="number">1</span>&amp;&amp;Q.<span class="built_in">front</span>().<span class="built_in">is_cw</span>(<span class="built_in">back_point</span>())) Q.<span class="built_in">pop_back</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(Q.<span class="built_in">size</span>()&gt;=<span class="number">2</span>)&#123;</span><br><span class="line">        K=<span class="number">0</span>;<span class="keyword">for</span>(<span class="keyword">auto</span>&amp;x:Q) Seg[++K]=x;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt; K;i++) <span class="keyword">if</span>(<span class="built_in">abs</span>(Seg[i].<span class="built_in">AB</span>().<span class="built_in">deg</span>()-Seg[i+<span class="number">1</span>].<span class="built_in">AB</span>().<span class="built_in">deg</span>())&gt;eps)</span><br><span class="line">            Ans=<span class="built_in">min</span>(Ans,Seg[i].<span class="built_in">inter</span>(Seg[i+<span class="number">1</span>]).y);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%.2lf\n&quot;</span>,Ans);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%A1%E7%AE%97%E5%87%A0%E4%BD%95/" rel="tag"># 计算几何</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/1582/10/05/hello-world/" rel="prev" title="hello world">
+                  <i class="fa fa-chevron-left"></i> hello world
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/1582/10/06/P4659-BalticOI-2008-%E9%98%80%E9%97%A8-%E9%A2%98%E8%A7%A3/" rel="next" title="P4659 [BalticOI 2008]阀门 题解">
+                  P4659 [BalticOI 2008]阀门 题解 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">rb_tree</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>
