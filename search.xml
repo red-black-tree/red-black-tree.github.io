@@ -243,14 +243,13 @@ s76,-153,76,-153s77,-151,77,-151c0.7,0.7,35.7,202,105,604c67.3,400.7,102,602.7,1
 606zM1001 80h400000v40H1017.7z"/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.2729550000000003em;"><span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:5.83em;"><span></span></span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:11.009614999999997em;"><span></span></span></span></span></span></span></span></span></span></span></span></p>
 <span id="more"></span>
 <hr>
-<h3 id="html-markdown-测试"><a class="markdownIt-Anchor" href="#html-markdown-测试"></a> HTML &amp; MarkDown 测试</h3>
+<h3 id="内嵌-html-测试"><a class="markdownIt-Anchor" href="#内嵌-html-测试"></a> 内嵌 HTML 测试</h3>
 <details>
     <summary>
         <a href="https://www.bilibili.com/video/BV1GJ411x7h7/">点击查看更多</a>
     </summary>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*                 _      _     _            _         _</span></span><br><span class="line"><span class="comment"> *  _ __  ___   __| |    | |__ | | __ _  ___| |__     | |_ _ __  ___   ___</span></span><br><span class="line"><span class="comment"> * | &#x27;__|/ _ \ / _  |____|  _ \| |/  &#x27; |/ __| &#x27; _|    |  _| &#x27;__|/ _ \ / _ \</span></span><br><span class="line"><span class="comment"> * | |  |  __/| (_| |____| |_) | | (_| | (__| . \     | |_| |  |  __/|  __/</span></span><br><span class="line"><span class="comment"> * |_|   \___| \____|    |____/|_|\__,_|\___|_|\_|     \__|_|   \___| \___|</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * ========================================================================</span></span><br><span class="line"><span class="comment"> * &quot;Auther: red-black tree, Created: 1582-10-05, Last Modified: 1582-10-14&quot;</span></span><br><span class="line"><span class="comment"> * &quot;More information: red-black-tree.github.io&quot; */</span> <span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std; <span class="keyword">auto</span> __INIT_IO = cin.<span class="built_in">tie</span>(<span class="literal">nullptr</span>)-&gt;<span class="built_in">sync_with_stdio</span>(<span class="number">0</span>);</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;<span class="type">int64_t</span> a, b; cin &gt;&gt; a &gt;&gt; b; cout &lt;&lt; (a + b) &lt;&lt; <span class="string">&#x27;\n&#x27;</span>; <span class="keyword">return</span> <span class="number">0</span>;&#125;</span><br></pre></td></tr></table></figure>
-</details>
-]]></content>
+</details>]]></content>
       <categories>
         <category>测试</category>
       </categories>
