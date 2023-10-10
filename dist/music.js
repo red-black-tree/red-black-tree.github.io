@@ -1,7 +1,7 @@
 const ap = new APlayer({
     container: document.getElementById('aplayer'),
     fixed: true,
-    autoplay: true,
+    // autoplay: true,
     audio: [
         {
             name: 'Never Gonna Give You Up',
